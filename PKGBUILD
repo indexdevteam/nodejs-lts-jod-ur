@@ -4,7 +4,7 @@
 # Contributor: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=nodejs-lts-jod
-pkgver=22.17.0
+pkgver=22.17.1
 pkgrel=1
 pkgdesc='Evented I/O for V8 javascript ("Active LTS" release: Jod)'
 arch=(x86_64)
@@ -21,7 +21,7 @@ provides=(
 conflicts=(nodejs)
 source=("https://nodejs.org/dist/v${pkgver}/node-v${pkgver}.tar.xz")
 # https://nodejs.org/download/release/latest-jod/SHASUMS256.txt.asc
-sha256sums=('7a3ef2aedb905ea7926e5209157266e2376a5db619d9ac0cba3c967f6f5db4f9')
+sha256sums=('327415fd76fcebb98133bf56e2d90e3ac048b038fac2676f03b6db91074575b9')
 
 build() {
   cd node-v${pkgver}
