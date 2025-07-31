@@ -4,7 +4,7 @@
 # Contributor: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=nodejs-lts-jod
-pkgver=22.17.1
+pkgver=22.18.0
 pkgrel=1
 pkgdesc='Evented I/O for V8 javascript ("Active LTS" release: Jod)'
 arch=(x86_64)
@@ -21,14 +21,17 @@ provides=(
 conflicts=(nodejs)
 source=("https://nodejs.org/dist/v${pkgver}/node-v${pkgver}.tar.xz")
 # https://nodejs.org/download/release/latest-jod/SHASUMS256.txt.asc
-sha256sums=('327415fd76fcebb98133bf56e2d90e3ac048b038fac2676f03b6db91074575b9')
+sha256sums=('120e0f74419097a9fafae1fd80b9de7791a587e6f1c48c22b193239ccd0f7084')
+
+_set_flags() {
+  # /usr/lib/libnode.so uses malloc_usable_size, which is incompatible with fortification level 3
+  CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+  CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+}
 
 build() {
+  _set_flags
   cd node-v${pkgver}
-
-  # this uses malloc_usable_size, which is incompatible with fortification level 3
-  export CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
-  export CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
 
   ./configure \
     --prefix=/usr \
@@ -48,8 +51,9 @@ build() {
 }
 
 check() {
+  _set_flags
   cd node-v${pkgver}
-  # ignore failing test, they work when compiled locally
+  # ignore failing tests, they work when compiled locally
   rm test/parallel/test-http2-client-set-priority.js
   rm test/parallel/test-http2-priority-event.js
   rm test/parallel/test-http-outgoing-end-cork.js
@@ -57,12 +61,8 @@ check() {
 }
 
 package() {
+  _set_flags
   cd node-v${pkgver}
-
-  # this uses malloc_usable_size, which is incompatible with fortification level 3
-  export CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
-  export CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
-
   make DESTDIR="${pkgdir}" install
   install -Dm644 LICENSE -t "${pkgdir}"/usr/share/licenses/${pkgname}/
 }
