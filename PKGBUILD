@@ -5,7 +5,7 @@
 
 pkgname=nodejs-lts-jod
 pkgver=22.21.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Evented I/O for V8 javascript ("Active LTS" release: Jod)'
 arch=(x86_64)
 url=https://nodejs.org/
@@ -36,6 +36,7 @@ build() {
   ./configure \
     --prefix=/usr \
     --with-intl=system-icu \
+    --without-corepack \
     --without-npm \
     --shared-openssl \
     --shared-zlib \
