@@ -5,20 +5,17 @@
 
 pkgname=nodejs-lts-jod
 pkgver=22.21.0
-pkgrel=2
-pkgdesc='Evented I/O for V8 javascript ("Active LTS" release: Jod)'
+pkgrel=3
+pkgdesc='Evented I/O for V8 javascript (LTS release: Jod)'
 arch=(x86_64)
 url=https://nodejs.org/
 license=(MIT)
 depends=(openssl zlib icu libuv c-ares brotli libnghttp2) # http-parser v8)
 makedepends=(python procps-ng)
 optdepends=('npm: nodejs package manager')
-options=(!lto)
-provides=(
-  "nodejs=$pkgver"
-  nodejs-lts
-)
+provides=("nodejs=$pkgver")
 conflicts=(nodejs)
+options=(!lto)
 source=("https://nodejs.org/dist/v${pkgver}/node-v${pkgver}.tar.xz")
 # https://nodejs.org/download/release/latest-jod/SHASUMS256.txt.asc
 sha256sums=('791b18e969ea22cc952108ee8eaafbb12cddfd973bbbb0b7fc116395c0d9a81c')
