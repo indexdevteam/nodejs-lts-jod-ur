@@ -5,7 +5,7 @@
 
 pkgname=nodejs-lts-jod
 pkgver=22.21.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Evented I/O for V8 javascript (LTS release: Jod)'
 arch=(x86_64)
 url=https://nodejs.org/
@@ -61,6 +61,11 @@ check() {
   rm test/parallel/test-http2-priority-event.js
   rm test/parallel/test-http2-reset-flood.js
   rm test/parallel/test-tls-ocsp-callback.js
+
+  # https://github.com/nodejs/node/pull/60523
+  rm test/parallel/test-datetime-change-notify.js
+  rm test/parallel/test-icu-env.js
+
   make test-only
 }
 
