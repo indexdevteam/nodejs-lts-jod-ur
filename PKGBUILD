@@ -63,7 +63,7 @@ _pkg=nodejs
 _variant=lts-jod
 pkgname="${_pkg}-${_variant}"
 pkgver=22.22.0
-pkgrel=2
+pkgrel=3
 pkgdesc='Evented I/O for V8 javascript (LTS release: Jod)'
 arch=(
   "aarch64"
@@ -89,6 +89,7 @@ depends=(
 makedepends=(
   "${_py}"
   "procps-ng"
+  "patch"
 )
 _npm_optdepends=(
   'npm:'
