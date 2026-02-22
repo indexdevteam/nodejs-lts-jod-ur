@@ -161,10 +161,20 @@ sha256sums=(
 )
 
 _set_flags() {
+  local \
+    _cxxflags=()
   # /usr/lib/libnode.so uses malloc_usable_size,
   # which is incompatible with fortification level 3
   CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
   CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+  local \
+    _cxxflags=()
+  _cxxflags+=(
+    ${CXXFLAGS}
+    -Wno-template-id-cdtor
+  )
+  export \
+    CXXFLAGS="${_cxxflags[*]}"
 }
 
 prepare() {
@@ -180,7 +190,12 @@ prepare() {
 
 build() {
   local \
-    _configure_opts=()
+    _configure_opts=() \
+    _cxxflags=()
+  _cxxflags+=(
+    ${CXXFLAGS}
+    -Wno-template-id-cdtor
+  )
   _configure_opts+=(
     --prefix="/usr"
     --with-intl="system-icu"
